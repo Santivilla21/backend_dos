@@ -1,0 +1,24 @@
+<h1>Lista de productos</h1>
+<ul>
+  {{#each productos}}
+    <li>
+      <strong>{{title}}</strong> - ${{price}} 
+    </li>
+  {{/each}}
+</ul>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+
+  socket.on('producto-nuevo', (producto) => {
+    console.log('Nuevo producto recibido en tiempo real:', producto);
+
+    // Podés insertar el producto en el DOM dinámicamente si querés
+    const lista = document.getElementById('lista-productos');
+    if (lista) {
+      const item = document.createElement('li');
+      item.textContent = `${producto.titulo} - $${producto.precio}`;
+      lista.appendChild(item);
+    }
+  });
+</script>
